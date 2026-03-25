@@ -1,0 +1,131 @@
+-- Dataset: orders
+-- orders(order_id, customer_name, product, category, price, quantity, order_date, city)
+
+--------------------------------------------------
+-- Basic SELECT
+--------------------------------------------------
+
+SELECT * FROM orders;
+
+SELECT customer_name, product FROM orders;
+
+SELECT product FROM orders;
+
+SELECT product, price FROM orders;
+
+SELECT * FROM orders WHERE order_date > '2022-01-01';
+
+--------------------------------------------------
+-- WHERE Conditions
+--------------------------------------------------
+
+SELECT * FROM orders WHERE price > 1000;
+
+SELECT * FROM orders WHERE city = 'Bangalore';
+
+SELECT * FROM orders WHERE quantity < 3;
+
+SELECT * FROM orders WHERE price BETWEEN 500 AND 2000;
+
+SELECT * FROM orders WHERE city != 'Delhi';
+
+--------------------------------------------------
+-- IN / LIKE
+--------------------------------------------------
+
+SELECT * FROM orders WHERE city IN ('Bangalore', 'Mumbai', 'Chennai');
+
+SELECT * FROM orders WHERE city NOT IN ('Hyderabad', 'Pune');
+
+SELECT * FROM orders WHERE customer_name LIKE 'S%';
+
+SELECT * FROM orders WHERE product LIKE '%r';
+
+SELECT * FROM orders WHERE product LIKE '%oo%';
+
+--------------------------------------------------
+-- Aggregate Functions
+--------------------------------------------------
+
+SELECT MAX(price) FROM orders;
+
+SELECT MIN(price) FROM orders;
+
+SELECT AVG(price) FROM orders;
+
+SELECT SUM(price * quantity) AS total_revenue FROM orders;
+
+SELECT COUNT(*) FROM orders;
+
+--------------------------------------------------
+-- DISTINCT / COUNT / LIMIT
+--------------------------------------------------
+
+SELECT DISTINCT category FROM orders;
+
+SELECT COUNT(customer_name) FROM orders;
+
+SELECT COUNT(DISTINCT city) FROM orders;
+
+SELECT * FROM orders ORDER BY price DESC LIMIT 5;
+
+SELECT * FROM orders LIMIT 3;
+
+--------------------------------------------------
+-- ORDER BY & Alias
+--------------------------------------------------
+
+SELECT * FROM orders ORDER BY price ASC;
+
+SELECT * FROM orders ORDER BY quantity DESC;
+
+SELECT product AS Product_Name FROM orders;
+
+SELECT price AS Order_Price FROM orders;
+
+SELECT * FROM orders ORDER BY category ASC, price ASC;
+
+--------------------------------------------------
+-- Aggregate with WHERE
+--------------------------------------------------
+
+SELECT AVG(price) FROM orders WHERE city = 'Bangalore';
+
+SELECT SUM(price * quantity) FROM orders WHERE category = 'Electronics';
+
+SELECT MAX(price) FROM orders WHERE quantity > 2;
+
+SELECT COUNT(*) FROM orders WHERE category = 'Clothing';
+
+SELECT MIN(price) FROM orders WHERE city = 'Chennai';
+
+--------------------------------------------------
+-- GROUP BY & HAVING
+--------------------------------------------------
+
+SELECT category, COUNT(*) FROM orders GROUP BY category;
+
+SELECT category, AVG(price) FROM orders GROUP BY category;
+
+SELECT city, SUM(price * quantity) FROM orders GROUP BY city;
+
+SELECT category, COUNT(*) 
+FROM orders 
+GROUP BY category 
+HAVING COUNT(*) > 5;
+
+SELECT city, AVG(price) 
+FROM orders 
+GROUP BY city 
+HAVING AVG(price) > 1500;
+
+SELECT category, AVG(price) AS avg_price
+FROM orders
+GROUP BY category
+ORDER BY avg_price DESC
+LIMIT 1;
+
+SELECT city, COUNT(*) 
+FROM orders 
+GROUP BY city 
+HAVING COUNT(*) > 3;
