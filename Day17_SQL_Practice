@@ -1,0 +1,92 @@
+-- 📌 SQL Revision Practice 
+-- Dataset: orders
+-- orders(order_id, customer_name, product, category, price, quantity, order_date, city)
+
+--------------------------------------------------
+-- 🔹 Basic Filtering
+--------------------------------------------------
+
+-- 1. Orders with price greater than 2000
+SELECT * 
+FROM orders 
+WHERE price > 2000;
+
+-- 2. Orders from Bangalore
+SELECT * 
+FROM orders 
+WHERE city = 'Bangalore';
+
+-- 3. Orders where quantity is less than 3
+SELECT * 
+FROM orders 
+WHERE quantity < 3;
+
+--------------------------------------------------
+-- 🔹 LIKE & Pattern Matching
+--------------------------------------------------
+
+-- 4. Products starting with 'M'
+SELECT * 
+FROM orders 
+WHERE product LIKE 'M%';
+
+-- 5. Products containing 'a'
+SELECT * 
+FROM orders 
+WHERE product LIKE '%a%';
+
+--------------------------------------------------
+-- 🔹 Aggregate Functions
+--------------------------------------------------
+
+-- 6. Total number of orders
+SELECT COUNT(*) 
+FROM orders;
+
+-- 7. Average price of orders
+SELECT AVG(price) 
+FROM orders;
+
+-- 8. Total revenue
+SELECT SUM(price * quantity) AS total_revenue 
+FROM orders;
+
+--------------------------------------------------
+-- 🔹 GROUP BY Practice
+--------------------------------------------------
+
+-- 9. Total orders per city
+SELECT city, COUNT(*) AS total_orders
+FROM orders
+GROUP BY city;
+
+-- 10. Total quantity per category
+SELECT category, SUM(quantity) AS total_quantity
+FROM orders
+GROUP BY category;
+
+--------------------------------------------------
+-- 🔹 HAVING Clause
+--------------------------------------------------
+
+-- 11. Cities with more than 2 orders
+SELECT city, COUNT(*) AS total_orders
+FROM orders
+GROUP BY city
+HAVING COUNT(*) > 2;
+
+--------------------------------------------------
+-- 🔹 Sorting & LIMIT
+--------------------------------------------------
+
+-- 12. Top 3 most expensive orders
+SELECT * 
+FROM orders 
+ORDER BY price DESC 
+LIMIT 3;
+
+-- 13. Lowest priced order
+SELECT * 
+FROM orders 
+ORDER BY price ASC 
+LIMIT 1;
