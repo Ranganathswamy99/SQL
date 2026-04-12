@@ -1,0 +1,49 @@
+-- 1. Basic SELECT
+SELECT name, salary
+FROM employees
+WHERE salary > 50000;
+
+-- 2. GROUP BY with Aggregation
+SELECT department, COUNT(*) AS total_employees, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department;
+
+-- 3. INNER JOIN
+SELECT e.name, d.department_name
+FROM employees e
+INNER JOIN departments d
+ON e.department_id = d.department_id;
+
+-- 4. LEFT JOIN
+SELECT e.name, d.department_name
+FROM employees e
+LEFT JOIN departments d
+ON e.department_id = d.department_id;
+
+-- 5. Window Function (ROW_NUMBER)
+SELECT name, department, salary,
+ROW_NUMBER() OVER (PARTITION BY department ORDER BY salary DESC) AS rank
+FROM employees;
+
+-- 6. Top 5 Highest Salaries
+SELECT name, salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 5;
+
+-- 7. Subquery (Above Average Salary)
+SELECT name, salary
+FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);
+
+-- 8. CASE WHEN (Salary Category)
+SELECT name, salary,
+CASE 
+    WHEN salary > 70000 THEN 'High'
+    WHEN salary BETWEEN 40000 AND 70000 THEN 'Medium'
+    ELSE 'Low'
+END AS salary_category
+FROM employees;
+
+-- 9. Find Duplicate Emails
+SELECT email, COUNT(*)
